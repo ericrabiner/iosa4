@@ -55,7 +55,7 @@
                     <navigationItem key="navigationItem" id="Lij-8G-sRR">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="G0Q-cd-msZ">
                             <connections>
-                                <segue destination="qkh-Dd-UAO" kind="presentation" identifier="toAddMeal" id="92X-MO-4n3"/>
+                                <segue destination="qkh-Dd-UAO" kind="presentation" identifier="toMealAdd" id="92X-MO-4n3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -236,7 +236,7 @@
             </objects>
             <point key="canvasLocation" x="4197" y="65"/>
         </scene>
-        <!--Add Item-->
+        <!--Add Meal-->
         <scene sceneID="bxm-5B-DgP">
             <objects>
                 <viewController id="b4q-qz-F01" customClass="MealAdd" customModule="FoodDiary" customModuleProvider="target" sceneMemberID="viewController">
@@ -269,7 +269,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="3iu-ah-TXQ"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Item" id="fPw-pD-xre">
+                    <navigationItem key="navigationItem" title="Add Meal" id="fPw-pD-xre">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="c86-2X-xhT">
                             <connections>
                                 <action selector="cancel:" destination="b4q-qz-F01" id="EQb-l0-ipg"/>

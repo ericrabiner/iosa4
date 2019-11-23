@@ -98,19 +98,19 @@ class MealList: ListBaseCD, AddMealDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
          if segue.identifier == "toMealScene" {
-             let vc = segue.destination as! MealScene
-             let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
-             let selectedData = frc.object(at: indexPath!)
-             vc.item = selectedData
-             vc.title = "Meal"
-             vc.m = m
+            let vc = segue.destination as! MealScene
+            let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
+            let selectedData = frc.object(at: indexPath!)
+            vc.item = selectedData
+            vc.title = "Meal"
+            vc.m = m
          }
 
          if segue.identifier == "toMealAdd" {
-             let nav = segue.destination as! UINavigationController
-             let vc = nav.viewControllers[0] as! MealAdd
-             vc.m = m
-             vc.delegate = self
+            let nav = segue.destination as! UINavigationController
+            let vc = nav.viewControllers[0] as! MealAdd
+            vc.m = m
+            vc.delegate = self
          }
         
     }

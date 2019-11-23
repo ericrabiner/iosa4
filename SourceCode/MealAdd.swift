@@ -43,6 +43,8 @@ class MealAdd: UIViewController {
         // Call into the delegate
         print("Hi")
         delegate?.addTaskDidCancel(self)
+        dump(delegate)
+        print("ok")
     }
     
     @IBAction func save(_ sender: UIBarButtonItem) {
