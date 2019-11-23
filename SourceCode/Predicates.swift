@@ -34,3 +34,29 @@ class MealPredicates {
     }
     
 }
+
+class FoodConsumedPredicates {
+    
+    var m = DataModelManager()
+    
+    var item: FoodConsumed!
+    
+    init() {
+        item = m.foodConsumed_CreateItem()
+    }
+    
+    func predicates() {
+        
+        // Reminder, fetch request results will be a collection of zero or more items, or nil
+        // Make sure that you consider this when working with the results
+        
+        // Object identifier
+        _ = NSPredicate(format: "self == %@", item.objectID)
+        
+        // String match, case-insensitive
+        _ = NSPredicate(format: "name ==[c] %@", item.descr!)
+        
+        // More to come...
+    }
+    
+}

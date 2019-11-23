@@ -8,9 +8,9 @@ import CoreData
 extension DataModelManager {
     
     // Count all (nil predicate) or some (non-nil configured predicate)
-    func meal_Count(withPredicate: NSPredicate) -> Int {
+    func foodConsumed_Count(withPredicate: NSPredicate) -> Int {
         
-        let fetchRequest: NSFetchRequest<Meal> = Meal.fetchRequest()
+        let fetchRequest: NSFetchRequest<FoodConsumed> = FoodConsumed.fetchRequest()
         fetchRequest.predicate = withPredicate
         
         do {
@@ -23,14 +23,14 @@ extension DataModelManager {
     }
     
     // Fetch all
-    func meal_GetAll() -> [Meal]? {
-        return meal_GetSome(withPredicate: nil)
+    func foodConsumed_GetAll() -> [FoodConsumed]? {
+        return foodConsumed_GetSome(withPredicate: nil)
     }
     
     // Fetch some
-    func meal_GetSome(withPredicate: NSPredicate?) -> [Meal]? {
+    func foodConsumed_GetSome(withPredicate: NSPredicate?) -> [FoodConsumed]? {
         
-        let fetchRequest: NSFetchRequest<Meal> = Meal.fetchRequest()
+        let fetchRequest: NSFetchRequest<FoodConsumed> = FoodConsumed.fetchRequest()
         fetchRequest.predicate = withPredicate
         
         // Optional, configure one or more sort descriptors here
@@ -47,9 +47,9 @@ extension DataModelManager {
     }
     
     // Fetch one, by its unique object identifier
-    func meal_GetByObjectId(_ objectId: NSManagedObjectID) -> Meal? {
+    func foodConsumed_GetByObjectId(_ objectId: NSManagedObjectID) -> FoodConsumed? {
         
-        let fetchRequest: NSFetchRequest<Meal> = Meal.fetchRequest()
+        let fetchRequest: NSFetchRequest<FoodConsumed> = FoodConsumed.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "self == %@", objectId)
         
         do {
@@ -67,9 +67,9 @@ extension DataModelManager {
     }
     
     // Fetch one, by another attribute that has unique values (e.g. "name")
-    func meal_GetByName(_ name: String) -> Meal? {
+    func foodConsumed_GetByName(_ name: String) -> FoodConsumed? {
         
-        let fetchRequest: NSFetchRequest<Meal> = Meal.fetchRequest()
+        let fetchRequest: NSFetchRequest<FoodConsumed> = FoodConsumed.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "name ==[c] %@", name)
         
         do {
@@ -87,9 +87,9 @@ extension DataModelManager {
     }
     
     // Create new
-    func meal_CreateItem() -> Meal? {
+    func foodConsumed_CreateItem() -> FoodConsumed? {
         
-        guard let newItem = NSEntityDescription.insertNewObject(forEntityName: "Meal", into: ds_context) as? Meal else {
+        guard let newItem = NSEntityDescription.insertNewObject(forEntityName: "FoodConsumed", into: ds_context) as? FoodConsumed else {
             print("Cannot create a new item")
             return nil
         }
@@ -97,14 +97,14 @@ extension DataModelManager {
     }
     
     // Delete item
-    func meal_DeleteItem(item: Meal) {
+    func foodConsumed_DeleteItem(item: FoodConsumed) {
         ds_context.delete(item)
         ds_save()
     }
     
     // Delete all
-    func meal_DeleteAll() {
-        if let result = meal_GetAll() {
+    func foodConsumed_DeleteAll() {
+        if let result = foodConsumed_GetAll() {
             for obj in result {
                 ds_context.delete(obj)
             }

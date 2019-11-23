@@ -1,26 +1,27 @@
 import UIKit
 import CoreData
 
-class MealList: ListBaseCD, AddMealDelegate {
+class FoodList: ListBaseCD {
     
     // MARK: - Private internal instance variables
-    private var frc: NSFetchedResultsController<Meal>!
+    
+    // Configure the desired entity type in the frc
+    private var frc: NSFetchedResultsController<FoodConsumed>!
     
     // MARK: - Public properties (instance variables)
-    var m: DataModelManager!
     
+    var m: DataModelManager!
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Configure nav items
-        title = "Meals"
-        // If desired, configure the table view edit capability
-        navigationItem.leftBarButtonItem = editButtonItem
+        title = "Meal Food Items"
         
         // Configure the frc for the desired entity type, sort is case-insensitive
-        frc = m.ds_frcForEntityNamed("Meal", withPredicateFormat: nil, predicateObject: nil, sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))], andSectionNameKeyPath: nil)
+        frc = m.ds_frcForEntityNamed("FoodConsumed", withPredicateFormat: nil, predicateObject: nil, sortDescriptors: [NSSortDescriptor(key: "descr", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))], andSectionNameKeyPath: nil)
         
         // This controller will be the frc delegate
         frc.delegate = self;
@@ -31,29 +32,22 @@ class MealList: ListBaseCD, AddMealDelegate {
         } catch let error {
             print(error.localizedDescription)
         }
-
-    }
-    
-    func addTaskDidCancel(_ controller: UIViewController) {
-        print("Bye")
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func addTaskDidSave(_ controller: UIViewController) {
-        dismiss(animated: true, completion: nil)
+        
     }
     
     // MARK: - Actions (user interface)
-    
-    // Disable the right bar button (the + "Add" button) during table edits
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        // Must call super, then set the right bar button state
-        super.setEditing(editing, animated: animated)
-        navigationItem.rightBarButtonItem?.isEnabled = !isEditing
+    @IBAction func addItemHere(_ sender: UIBarButtonItem) {
+        
+        if let newItem = m.foodConsumed_CreateItem() {
+            
+            newItem.descr = StoreInitializer.randomString(StoreInitializer.randomInteger(between: 5, and: 15))
+            newItem.brandOwner = "Toronto"
+            //            newItem.quantity = Int32(StoreInitializer.randomInteger(between: 10, and: 500))
+            m.ds_save()
+        }
     }
-
-    // MARK: - Table view building
     
+    // MARK: - Table view building
     override func numberOfSections(in tableView: UITableView) -> Int {
         return self.frc.sections?.count ?? 0
     }
@@ -74,45 +68,36 @@ class MealList: ListBaseCD, AddMealDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "defaultFood", for: indexPath)
         
         let item = frc.object(at: indexPath)
-        cell.textLabel!.text = item.name
-        cell.detailTextLabel?.text = item.locName
+        cell.textLabel!.text = item.descr
+        cell.detailTextLabel?.text = item.brandOwner
         
         return cell
     }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
         if editingStyle == .delete {
             // Delete the row from the data source
             let item = frc.object(at: indexPath)
-            m.meal_DeleteItem(item: item)
+            m.foodConsumed_DeleteItem(item: item)
         }
     }
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-         if segue.identifier == "toMealScene" {
-             let vc = segue.destination as! MealScene
-             let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
-             let selectedData = frc.object(at: indexPath!)
-             vc.item = selectedData
-             vc.title = "Meal"
-             vc.m = m
-         }
-
-         if segue.identifier == "toMealAdd" {
-             let nav = segue.destination as! UINavigationController
-             let vc = nav.viewControllers[0] as! MealAdd
-             vc.m = m
-             vc.delegate = self
-         }
-        
+        if segue.identifier == "toFoodScene" {
+            let vc = segue.destination as! FoodScene
+            let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
+            let selectedData = frc.object(at: indexPath!)
+            vc.item = selectedData
+            vc.m = m
+            // Set the delegate, if configured
+            //vc.delegate = self
+        }
     }
     
 }
