@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		070BC4B32389EAD000DEFA2E /* FoodAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070BC4B22389EAD000DEFA2E /* FoodAdd.swift */; };
 		070BC4B52389F08000DEFA2E /* FoodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070BC4B42389F08000DEFA2E /* FoodSearch.swift */; };
+		077DD347238B00D600E53AD4 /* MealMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077DD346238B00D600E53AD4 /* MealMap.swift */; };
 		07B404D22388D999008105B5 /* FoodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B404D12388D999008105B5 /* FoodList.swift */; };
 		07B404D62388DB94008105B5 /* FoodScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B404D52388DB94008105B5 /* FoodScene.swift */; };
 		07B404DA2388E274008105B5 /* MealAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B404D92388E274008105B5 /* MealAdd.swift */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		070BC4B22389EAD000DEFA2E /* FoodAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAdd.swift; sourceTree = "<group>"; };
 		070BC4B42389F08000DEFA2E /* FoodSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearch.swift; sourceTree = "<group>"; };
+		077DD346238B00D600E53AD4 /* MealMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealMap.swift; sourceTree = "<group>"; };
 		07B404D12388D999008105B5 /* FoodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodList.swift; sourceTree = "<group>"; };
 		07B404D52388DB94008105B5 /* FoodScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodScene.swift; sourceTree = "<group>"; };
 		07B404D92388E274008105B5 /* MealAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAdd.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				07B404D92388E274008105B5 /* MealAdd.swift */,
 				07E4AB7223889D15008B4AF6 /* MealList.swift */,
 				07E4AB762388A1C0008B4AF6 /* MealScene.swift */,
+				077DD346238B00D600E53AD4 /* MealMap.swift */,
 				070BC4B22389EAD000DEFA2E /* FoodAdd.swift */,
 				07B404D12388D999008105B5 /* FoodList.swift */,
 				070BC4B42389F08000DEFA2E /* FoodSearch.swift */,
@@ -196,6 +199,7 @@
 				07B404D62388DB94008105B5 /* FoodScene.swift in Sources */,
 				07E4AB65238898C7008B4AF6 /* DataModelManager+Meal.swift in Sources */,
 				D07B352D2194DEB8006DF53D /* DataModelManager.swift in Sources */,
+				077DD347238B00D600E53AD4 /* MealMap.swift in Sources */,
 				D07B35302194DEB8006DF53D /* StoreInitializer.swift in Sources */,
 				D07B35122194DD83006DF53D /* AppDelegate.swift in Sources */,
 				07B404DA2388E274008105B5 /* MealAdd.swift in Sources */,

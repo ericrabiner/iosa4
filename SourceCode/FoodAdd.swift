@@ -13,7 +13,7 @@ protocol AddFoodDelegate: AnyObject {
     func addTaskDidSave(_ controller: UIViewController)
 }
 
-class FoodAdd: UIViewController, SearchDelegate {
+class FoodAdd: UIViewController, UITextFieldDelegate, SearchDelegate {
     
     // MARK: - Instance variables
     weak var delegate: AddFoodDelegate?
@@ -28,7 +28,15 @@ class FoodAdd: UIViewController, SearchDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         errorMessage.text?.removeAll()
+        foodItemName.delegate = self
+        foodBrandName.delegate = self
         super.viewDidLoad()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        foodItemName.resignFirstResponder()
+        foodBrandName.resignFirstResponder()
+        return true
     }
     
     // Make the first/desired text field active and show the keyboard

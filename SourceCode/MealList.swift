@@ -1,10 +1,13 @@
 import UIKit
 import CoreData
+import func AVFoundation.AVMakeRect
 
 class MealList: ListBaseCD, AddMealDelegate {
     
     // MARK: - Private internal instance variables
     private var frc: NSFetchedResultsController<Meal>!
+    // Configure the thumbnail size
+    private let thumbnailSize = CGSize(width: 50, height: 50)
     
     // MARK: - Public properties (instance variables)
     var m: DataModelManager!
@@ -14,8 +17,9 @@ class MealList: ListBaseCD, AddMealDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Configure nav items
         title = "Meals"
+        tableView.rowHeight = 60.0
+        
         // If desired, configure the table view edit capability
         navigationItem.leftBarButtonItem = editButtonItem
         
@@ -79,7 +83,32 @@ class MealList: ListBaseCD, AddMealDelegate {
         cell.textLabel!.text = item.name
         cell.detailTextLabel?.text = item.locName
         
+        // Show an image thumbnail
+        if let image = item.photo {
+            //cell.imageView?.image = UIImage(data: image)
+            cell.imageView?.image = getThumbnail(image: UIImage(data: image)!, for: thumbnailSize)
+        }
+        else {
+            cell.imageView?.image = getThumbnail(image: UIImage(named: "foodIcon")!, for: thumbnailSize)
+            //cell.imageView?.image = UIImage(named: "foodIcon")
+        }
+
         return cell
+    }
+    
+    // Image thumbnail generator
+    // All credit goes to the author, Mattt Thompson
+    // https://nshipster.com/image-resizing/
+    private func getThumbnail(image: UIImage, for size: CGSize) -> UIImage? {
+        // Create a small container in which we can draw the thumbnail
+        let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: .zero, size: thumbnailSize))
+        // Create an image renderer
+        let renderer = UIGraphicsImageRenderer(size: size)
+        // Create a new thumbnail image
+        return renderer.image { (context) in
+            //image.draw(in: CGRect(origin: .zero, size: size))
+            image.draw(in: rect)
+        }
     }
     
     // Override to support editing the table view.

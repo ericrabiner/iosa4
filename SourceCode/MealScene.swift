@@ -1,6 +1,7 @@
 import UIKit
+import MapKit
 
-class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ShowMapDelegate {
     
     // MARK: - Public properties (instance variables)
     
@@ -11,12 +12,21 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
     // MARK: - Outlets (user interface)
     @IBOutlet weak var mealName: UILabel!
     @IBOutlet weak var imageContent: UIImageView!
+    @IBOutlet weak var mealDate: UILabel!
+    @IBOutlet weak var mealTime: UILabel!
+    @IBOutlet weak var mealNotes: UILabel!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mealName.text = item.name
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd, yyyy"
+        mealDate.text = formatter.string(from: item.date!)
+        formatter.dateFormat = "hh:mm a"
+        mealTime.text = formatter.string(from: item.date!)
+        mealNotes.text = item.notes
         if let imgData = item.photo {
             
             imageContent.image = UIImage(data: imgData)
@@ -66,6 +76,10 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
         dismiss(animated: true, completion: nil)
     }
     
+    func showMapDone(_ controller: UIViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -74,8 +88,24 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
             vc.m = m
             vc.mealItem = item
             vc.foodItems = item.foodConsumed?.sortedArray(using: [NSSortDescriptor(key: "descr", ascending: true)]) as? [FoodConsumed]
-        
          }
+        
+        if segue.identifier == "toMealMap" {
+            let nav = segue.destination as! UINavigationController
+            let vc = nav.viewControllers[0] as! MealMap
+            vc.m = m
+            vc.mealItem = item
+            vc.delegate = self
+            vc.userLocationTitle = "My Location"
+            vc.userLocationSubtitle = ""
+            
+            if item.locLong != 0 && item.locLat != 0 {
+                let location = CLLocation(latitude: CLLocationDegrees(item!.locLat), longitude: CLLocationDegrees(item!.locLong))
+                let ma1 = MapAnnotation(coordinate: location.coordinate, title: item.name, subtitle: item.locName)
+                vc.mapAnnotations = [ma1]
+            }
+
+        }
 
     }
     

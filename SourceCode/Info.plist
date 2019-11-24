@@ -38,6 +38,8 @@
 	<string>The app will save the photo, for your use and future enjoyment</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The app will save the photo, for your use and future enjoyment</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app tags a new item with the current location.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
