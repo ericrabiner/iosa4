@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class FoodList: ListBaseCD {
+class FoodList: ListBaseCD, AddFoodDelegate {
     
     // MARK: - Private internal instance variables
     
@@ -9,8 +9,8 @@ class FoodList: ListBaseCD {
     private var frc: NSFetchedResultsController<FoodConsumed>!
     
     // MARK: - Public properties (instance variables)
-    
     var m: DataModelManager!
+    var meal: Meal!
 
     // MARK: - Lifecycle
     
@@ -19,6 +19,9 @@ class FoodList: ListBaseCD {
         
         // Configure nav items
         title = "Meal Food Items"
+        
+        // If desired, configure the table view edit capability
+        //navigationItem.leftBarButtonItem = editButtonItem
         
         // Configure the frc for the desired entity type, sort is case-insensitive
         frc = m.ds_frcForEntityNamed("FoodConsumed", withPredicateFormat: nil, predicateObject: nil, sortDescriptors: [NSSortDescriptor(key: "descr", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))], andSectionNameKeyPath: nil)
@@ -35,16 +38,12 @@ class FoodList: ListBaseCD {
         
     }
     
-    // MARK: - Actions (user interface)
-    @IBAction func addItemHere(_ sender: UIBarButtonItem) {
-        
-        if let newItem = m.foodConsumed_CreateItem() {
-            
-            newItem.descr = StoreInitializer.randomString(StoreInitializer.randomInteger(between: 5, and: 15))
-            newItem.brandOwner = "Toronto"
-            //            newItem.quantity = Int32(StoreInitializer.randomInteger(between: 10, and: 500))
-            m.ds_save()
-        }
+    func addTaskDidCancel(_ controller: UIViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func addTaskDidSave(_ controller: UIViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Table view building
@@ -97,6 +96,13 @@ class FoodList: ListBaseCD {
             vc.m = m
             // Set the delegate, if configured
             //vc.delegate = self
+        }
+        
+        if segue.identifier == "toFoodAdd" {
+            let nav = segue.destination as! UINavigationController
+            let vc = nav.viewControllers[0] as! FoodAdd
+            vc.m = m
+            vc.delegate = self
         }
     }
     

@@ -5,29 +5,27 @@
 
 import Foundation
 
-// MARK: - Constructs for importing data
-
-// Write a struct or class to describe the shape of each imported or externally-sourced entity
-
-// Example shape for a "Country" entity
-struct Country: Decodable {
-    let name: String
-    let capital: String
-    let region: String
+struct FDCSearchBody: Codable {
+    let generalSearchInput: String
+    let requireAllWords: Bool = true
+    let brandOwner: String?
+    let includeDataTypes = FDCSearchIDT()
+}
+struct FDCSearchIDT: Codable {
+    let Branded = true
 }
 
-// MARK: - Constructs for data within the app
-
-struct ExampleAdd {
-    let name: String
-    let quantity: Int
+struct FDCFood: Codable {
+    let fdcId: Int
+    let description: String?
+    let brandOwner: String?
+    let ingredients: String?
 }
 
-// Write a struct or class (below) to describe the shape of each entity
+struct FDCSearchRespose: Codable {
+    let foods: [FDCFood]
+}
 
-// This is an "extension"
-// Its job is to add to the base DateFormatter class
-// It will enable us to handle JSON date strings that have fractional seconds
 extension DateFormatter {
     static let iso8601Full: DateFormatter = {
         let formatter = DateFormatter()

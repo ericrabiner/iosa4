@@ -8,22 +8,21 @@
 
 import UIKit
 
-protocol AddMealDelegate: AnyObject {
+protocol AddFoodDelegate: AnyObject {
     func addTaskDidCancel(_ controller: UIViewController)
     func addTaskDidSave(_ controller: UIViewController)
 }
 
-class MealAdd: UIViewController {
+class FoodAdd: UIViewController, SearchDelegate {
     
     // MARK: - Instance variables
-    weak var delegate: AddMealDelegate?
+    weak var delegate: AddFoodDelegate?
     var m: DataModelManager!
     
     // MARK: - Outlets (user interface)
-    @IBOutlet weak var mealName: UITextField!
-    @IBOutlet weak var mealLocName: UITextField!
+    @IBOutlet weak var foodItemName: UITextField!
+    @IBOutlet weak var foodBrandName: UITextField!
     @IBOutlet weak var errorMessage: UILabel!
-    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -34,7 +33,22 @@ class MealAdd: UIViewController {
     // Make the first/desired text field active and show the keyboard
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        mealName.becomeFirstResponder()
+        foodItemName.becomeFirstResponder()
+    }
+    
+    // MARK: - Delegate methods
+    
+    func selectTaskDidCancel(_ controller: UIViewController) {
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // Use the correct type for the "item"
+    func selectTask(_ controller: UIViewController, didSelect item: FDCFood) {
+        foodItemName.text = item.description
+        foodBrandName.text = item.brandOwner
+        
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Actions (user interface)
@@ -50,12 +64,12 @@ class MealAdd: UIViewController {
         
         // Validate the data before saving
         
-        if mealName.text!.isEmpty {
+        if foodItemName.text!.isEmpty {
             errorMessage.text = "Name cannot be blank."
             return
         }
         
-        if mealLocName.text!.isEmpty {
+        if foodBrandName.text!.isEmpty {
             errorMessage.text = "Location name cannot be blank."
             return
         }
@@ -66,15 +80,26 @@ class MealAdd: UIViewController {
         errorMessage.text = "Attempting to save..."
         
         // Make an object, configure and save
-        if let newItem = m.meal_CreateItem() {
+        if let newItem = m.foodConsumed_CreateItem() {
             
-            newItem.name = mealName.text
-            newItem.locName = mealLocName.text
+            newItem.descr = foodItemName.text
+            newItem.brandOwner = foodBrandName.text
             m.ds_save()
         }
         
         // Call into the delegate
         delegate?.addTaskDidSave(self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toSearchedFood" {
+            let nav = segue.destination as! UINavigationController
+            let vc = nav.viewControllers[0] as! FoodSearch
+            vc.m = m
+            vc.delegate = self
+            vc.foodItemName = foodItemName.text!
+            vc.foodBrandName = foodBrandName.text ?? ""
+        }
     }
 
 }

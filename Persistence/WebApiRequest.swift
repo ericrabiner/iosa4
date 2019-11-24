@@ -18,7 +18,7 @@ class WebApiRequest {
     
     // Base URL, and then we add a path/segment to the end
     // This is customized to match the behavior of the desired Web API
-    var urlBase = "https://host.example.com/api"
+    var urlBase = ""
 
     // Settable properties of NSMutableURLRequest
     var httpMethod = "GET"
@@ -59,10 +59,11 @@ class WebApiRequest {
         request.setValue(headerAccept, forHTTPHeaderField: "Accept")
         request.setValue(headerContentType, forHTTPHeaderField: "Content-Type")
         // Add some code here to fetch the security bearer token from somewhere in the app
+        
         let token = ""
         // Then, if there is a token, attach it
         if !token.isEmpty {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+           request.setValue(token, forHTTPHeaderField: "api_key")
         }
         
         // Define a network task; after it's created, it's in a "suspended" state

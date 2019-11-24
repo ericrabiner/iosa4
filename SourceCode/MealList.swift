@@ -35,7 +35,6 @@ class MealList: ListBaseCD, AddMealDelegate {
     }
     
     func addTaskDidCancel(_ controller: UIViewController) {
-        print("Bye")
         dismiss(animated: true, completion: nil)
     }
     

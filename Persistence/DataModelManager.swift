@@ -16,6 +16,8 @@ class DataModelManager {
     var ds_context: NSManagedObjectContext!
     var ds_model: NSManagedObjectModel!
     
+    var foods = [FDCFood]()
+    
     // MARK: - Lifecycle
     
     init() {
@@ -38,6 +40,26 @@ class DataModelManager {
         cdStack.save()
     }
     
-    // Entity-specific methods (fetch, add, etc.) are located in extension source code files
-    
+    func foodGetData() -> [FDCFood] {
+        return foods
+    }
+
+    //https://api.nal.usda.gov/fdc/v1/356446?api_key=4rgfn7lFClJjkb5lP6OPRfbeU1U7o8wpbnX25qNB
+    func sendFDCSearchRequest(_ postData: FDCSearchBody) {
+ 
+        let request = WebApiRequest()
+        request.httpMethod = "POST"
+        request.urlBase = "https://api.nal.usda.gov/fdc/v1/search?api_key=4rgfn7lFClJjkb5lP6OPRfbeU1U7o8wpbnX25qNB"
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .formatted(DateFormatter.iso8601Full)
+        request.httpBody = try! encoder.encode(postData)
+        // Send the request, and write a completion method to pass to the request
+        request.sendRequest(toUrlPath: "") { (result: FDCSearchRespose) in
+            self.foods = result.foods
+        }
+        
+        // Post a notification
+        NotificationCenter.default.post(name: Notification.Name("FDCSearchWasSuccessful"), object: nil)
+
+    }
 }
