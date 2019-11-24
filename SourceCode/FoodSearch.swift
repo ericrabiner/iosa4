@@ -22,10 +22,6 @@ class FoodSearch: ListBaseCD {
         super.viewDidLoad()
         title = "Searching..."
         
-//        foods = m.foodGetData()
-        
-        
-  
         // Listen for a notification that new data is available for the list
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: Notification.Name("FDCSearchWasSuccessful"), object: nil)
         
@@ -36,7 +32,6 @@ class FoodSearch: ListBaseCD {
     
     // Code that runs when the notification happens
     @objc func reloadTableView() {
-        print("Updating Search Foods Table View")
         foods = m.foodGetData()
         title = "Food Item Search Results (\(self.foods.count))"
         tableView.reloadData()
@@ -66,16 +61,12 @@ class FoodSearch: ListBaseCD {
     
     // Responds to a row selection event
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         // Work with the selected item
         if let selectedCell = tableView.cellForRow(at: indexPath) {
-            
             // Show a check mark
             selectedCell.accessoryType = .checkmark
-            
             // Fetch the data for the selected item
             let data = foods[indexPath.row]
-            
             // Call back into the delegate
             delegate?.selectTask(self, didSelect: data)
         }

@@ -12,7 +12,6 @@ class FoodList: ListBaseCD, AddFoodDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Meal Food Items"
-        foodItems = mealItem.foodConsumed?.sortedArray(using: [NSSortDescriptor(key: "descr", ascending: true)]) as? [FoodConsumed]
     }
     
     func addTaskDidCancel(_ controller: UIViewController) {
@@ -21,6 +20,7 @@ class FoodList: ListBaseCD, AddFoodDelegate {
     
     func addTaskDidSave(_ controller: UIViewController) {
         foodItems = mealItem.foodConsumed?.sortedArray(using: [NSSortDescriptor(key: "descr", ascending: true)]) as? [FoodConsumed]
+        self.tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     

@@ -59,10 +59,7 @@ class DataModelManager {
         // Send the request, and write a completion method to pass to the request
         request.sendRequest(toUrlPath: "") { (result: FDCSearchRespose) in
             self.foods = result.foods
+            NotificationCenter.default.post(name: Notification.Name("FDCSearchWasSuccessful"), object: nil)
         }
-        
-        // Post a notification
-        NotificationCenter.default.post(name: Notification.Name("FDCSearchWasSuccessful"), object: nil)
-
     }
 }

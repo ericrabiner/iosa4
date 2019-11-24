@@ -40,7 +40,6 @@ class FoodAdd: UIViewController, SearchDelegate {
     // MARK: - Delegate methods
     
     func selectTaskDidCancel(_ controller: UIViewController) {
-        
         dismiss(animated: true, completion: nil)
     }
     
@@ -48,7 +47,6 @@ class FoodAdd: UIViewController, SearchDelegate {
     func selectTask(_ controller: UIViewController, didSelect item: FDCFood) {
         foodItemName.text = item.description
         foodBrandName.text = item.brandOwner
-        
         dismiss(animated: true, completion: nil)
     }
     
@@ -80,23 +78,12 @@ class FoodAdd: UIViewController, SearchDelegate {
         // Tell the user what we're doing
         errorMessage.text = "Attempting to save..."
         
-//        // Make an object, configure and save
-//        if let newItem = m.foodConsumed_CreateItem() {
-//
-//            newItem.descr = foodItemName.text
-//            newItem.brandOwner = foodBrandName.text
-//            m.ds_save()
-//        }
-        
         let newItem = FoodConsumed(context: m.ds_context)
         newItem.descr = foodItemName.text
         newItem.brandOwner = foodBrandName.text
         newItem.meal = mealItem
         m.ds_save()
-            
-        
-        
-        
+  
         // Call into the delegate
         delegate?.addTaskDidSave(self)
     }
