@@ -18,6 +18,7 @@ class FoodAdd: UIViewController, SearchDelegate {
     // MARK: - Instance variables
     weak var delegate: AddFoodDelegate?
     var m: DataModelManager!
+    var mealItem: Meal!
     
     // MARK: - Outlets (user interface)
     @IBOutlet weak var foodItemName: UITextField!
@@ -79,13 +80,22 @@ class FoodAdd: UIViewController, SearchDelegate {
         // Tell the user what we're doing
         errorMessage.text = "Attempting to save..."
         
-        // Make an object, configure and save
-        if let newItem = m.foodConsumed_CreateItem() {
+//        // Make an object, configure and save
+//        if let newItem = m.foodConsumed_CreateItem() {
+//
+//            newItem.descr = foodItemName.text
+//            newItem.brandOwner = foodBrandName.text
+//            m.ds_save()
+//        }
+        
+        let newItem = FoodConsumed(context: m.ds_context)
+        newItem.descr = foodItemName.text
+        newItem.brandOwner = foodBrandName.text
+        newItem.meal = mealItem
+        m.ds_save()
             
-            newItem.descr = foodItemName.text
-            newItem.brandOwner = foodBrandName.text
-            m.ds_save()
-        }
+        
+        
         
         // Call into the delegate
         delegate?.addTaskDidSave(self)

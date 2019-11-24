@@ -32,7 +32,9 @@ class MealScene: UIViewController {
          if segue.identifier == "toFoodList" {
             let vc = segue.destination as! FoodList
             vc.m = m
-            vc.meal = item
+            vc.mealItem = item
+            //vc.foodItems = item.foodConsumed?.sortedArray(using: [NSSortDescriptor(key: "name", ascending: true)]) as? [FoodConsumed]
+        
          }
 
     }

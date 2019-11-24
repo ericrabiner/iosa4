@@ -43,8 +43,11 @@ class DataModelManager {
     func foodGetData() -> [FDCFood] {
         return foods
     }
-
+    
+    // below is get with fcdid
     //https://api.nal.usda.gov/fdc/v1/356446?api_key=4rgfn7lFClJjkb5lP6OPRfbeU1U7o8wpbnX25qNB
+    
+    
     func sendFDCSearchRequest(_ postData: FDCSearchBody) {
  
         let request = WebApiRequest()

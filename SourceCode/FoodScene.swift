@@ -6,7 +6,7 @@ class FoodScene: UIViewController {
     
     var m: DataModelManager!
     // Passed-in object, if necessary
-    var item: FoodConsumed!
+    var foodItem: FoodConsumed!
     
     // MARK: - Outlets (user interface)
     @IBOutlet weak var foodName: UILabel!
@@ -16,7 +16,7 @@ class FoodScene: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Food Item"
-        foodName.text = item.descr
+        foodName.text = foodItem.descr
     }
     
     // MARK: - Navigation
