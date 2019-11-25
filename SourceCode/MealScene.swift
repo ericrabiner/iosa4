@@ -1,7 +1,14 @@
 import UIKit
 import MapKit
 
-class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ShowMapDelegate {
+class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ShowMapDelegate {
+    
+//    var totalCals: Double = 0.0
+//    var totalCarbs: Double = 0.0
+//    var totalFat: Double = 0.0
+//    var totalProtein: Double = 0.0
+//    var totalSodium: Double = 0.0
+    var nutrients: [Nutrients] = []
     
     // MARK: - Public properties (instance variables)
     
@@ -15,6 +22,7 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var mealDate: UILabel!
     @IBOutlet weak var mealTime: UILabel!
     @IBOutlet weak var mealNotes: UILabel!
+    @IBOutlet weak var tableview: UITableView!
     
     // MARK: - Lifecycle
     
@@ -27,6 +35,8 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
         formatter.dateFormat = "hh:mm a"
         mealTime.text = "Time: \(formatter.string(from: item.fullDate!))"
         mealNotes.text = "Notes: \(item.notes!)"
+        
+        
         if let imgData = item.photo {
             
             imageContent.image = UIImage(data: imgData)
@@ -38,6 +48,28 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
             //UIImage(cgImage: <#T##CGImage#>, scale: <#T##CGFloat#>, orientation: UIImage.Orientation)
             
         }
+        
+        var totalCals: Double = 0.0
+        var totalCarbs: Double = 0.0
+        var totalFat: Double = 0.0
+        var totalProtein: Double = 0.0
+        var totalSodium: Double = 0.0
+        
+        tableview.delegate = self
+        tableview.dataSource = self
+        
+        
+        if let foodItems = item.foodConsumed {
+            for case let foodItem as FoodConsumed in foodItems {
+                //let foodItem: FoodConsumed
+                totalCals += foodItem.ncals == -1 ? 0 : (Double(foodItem.quantity)/foodItem.servingSize)*foodItem.ncals
+                totalCarbs += foodItem.ncarbs == -1 ? 0 : (Double(foodItem.quantity)/foodItem.servingSize)*foodItem.ncarbs
+                totalFat += foodItem.nfat == -1 ? 0 : (Double(foodItem.quantity)/foodItem.servingSize)*foodItem.nfat
+                totalProtein += foodItem.nprotein == -1 ? 0 : (Double(foodItem.quantity)/foodItem.servingSize)*foodItem.nprotein
+                totalSodium += foodItem.nsodium == -1 ? 0 : (Double(foodItem.quantity)/foodItem.servingSize)*foodItem.nsodium
+            }
+        }
+        nutrients = [Nutrients(nutrient: "Calories", value: totalCals), Nutrients(nutrient: "Carbohydrates", value: totalCarbs), Nutrients(nutrient: "Fat", value: totalFat), Nutrients(nutrient: "Protein", value: totalProtein), Nutrients(nutrient: "Sodium", value: totalSodium)]
     }
     
     // MARK: - Actions (user interface)
@@ -79,6 +111,25 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
     func showMapDone(_ controller: UIViewController) {
         dismiss(animated: true, completion: nil)
     }
+    
+    // Number of sections
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    // Number of rows in a section
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "macronutrientstotal", for: indexPath)
+        let item = nutrients[indexPath.row]
+        cell.textLabel!.text = item.nutrient
+        cell.detailTextLabel?.text = String(format: "%.2f", item.value!)
+        return cell
+    }
+
     
     // MARK: - Navigation
     

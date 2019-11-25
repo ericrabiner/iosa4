@@ -45,6 +45,11 @@ struct Nutrients {
     let value: Double?
 }
 
+struct NutrientsTotal {
+    let nutrient: String?
+    let value: Double = 0
+}
+
 extension DateFormatter {
     static let iso8601Full: DateFormatter = {
         let formatter = DateFormatter()
