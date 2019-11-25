@@ -24,7 +24,7 @@ class MealList: ListBaseCD, AddMealDelegate {
         navigationItem.leftBarButtonItem = editButtonItem
         
         // Configure the frc for the desired entity type, sort is case-insensitive
-        frc = m.ds_frcForEntityNamed("Meal", withPredicateFormat: nil, predicateObject: nil, sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))], andSectionNameKeyPath: nil)
+        frc = m.ds_frcForEntityNamed("Meal", withPredicateFormat: nil, predicateObject: nil, sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))], andSectionNameKeyPath: "date")
         
         // This controller will be the frc delegate
         frc.delegate = self;
@@ -67,7 +67,7 @@ class MealList: ListBaseCD, AddMealDelegate {
         // Get a reference to the section object in the frc
         // And make sure there is a section name
         if let s = self.frc.sections?[section], s.name.count > 0 {
-            return "Your custom section prompt \(s.name)"
+            return s.name
         }
         return nil
     }

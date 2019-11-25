@@ -23,10 +23,10 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
         mealName.text = item.name
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd, yyyy"
-        mealDate.text = formatter.string(from: item.date!)
+        mealDate.text = "Date: \(formatter.string(from: item.fullDate!))"
         formatter.dateFormat = "hh:mm a"
-        mealTime.text = formatter.string(from: item.date!)
-        mealNotes.text = item.notes
+        mealTime.text = "Time: \(formatter.string(from: item.fullDate!))"
+        mealNotes.text = "Notes: \(item.notes!)"
         if let imgData = item.photo {
             
             imageContent.image = UIImage(data: imgData)

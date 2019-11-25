@@ -50,13 +50,14 @@ class FoodList: ListBaseCD, AddFoodDelegate {
             let vc = segue.destination as! FoodScene
             let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
             let selectedData = foodItems![(indexPath?.row)!]
-            //vc.foodItem = selectedData
-            let nutrients = [Nutrients(nutrient: "Calories", value: selectedData.ncals), Nutrients(nutrient: "Carbohydrates", value: selectedData.ncarbs), Nutrients(nutrient: "Fat", value: selectedData.nfat), Nutrients(nutrient: "Protein", value: selectedData.nprotein), Nutrients(nutrient: "Sodium", value: selectedData.nsodium)]
-            //vc.m = m
+            vc.foodItem = selectedData
+            vc.mealItem = mealItem
+            vc.nutrients = [Nutrients(nutrient: "Calories", value: selectedData.ncals), Nutrients(nutrient: "Carbohydrates", value: selectedData.ncarbs), Nutrients(nutrient: "Fat", value: selectedData.nfat), Nutrients(nutrient: "Protein", value: selectedData.nprotein), Nutrients(nutrient: "Sodium", value: selectedData.nsodium)]
+         
        
 //            vc.allData = AllData(mealInfo: MealData(mealName: mealItem.name!, mealLoc: mealItem.locName!), foodInfo: FDCFood(fdcId: Int(selectedData.fdcId), description: selectedData.descr, brandOwner: selectedData.brandOwner, ingredients: "", servingSize: selectedData.servingSize, labelNutrients: nil), nutrients: [Nutrients(nutrient: "Calories", value: selectedData.ncals), Nutrients(nutrient: "Carbohydrates", value: selectedData.ncarbs), Nutrients(nutrient: "Fat", value: selectedData.nfat), Nutrients(nutrient: "Protein", value: selectedData.nprotein), Nutrients(nutrient: "Sodium", value: selectedData.nsodium)])
             
-            vc.allData = [AllData(sectionName: "Meal Data", data: mealItem!), AllData(sectionName: "Food Data", data: selectedData), AllData(sectionName: "Macronutrients Data", data: nutrients)]
+//            vc.allData = [AllData(sectionName: "Meal Data", data: mealItem!), AllData(sectionName: "Food Data", data: selectedData), AllData(sectionName: "Macronutrients Data", data: nutrients)]
             
         }
         

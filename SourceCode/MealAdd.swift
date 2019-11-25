@@ -37,6 +37,7 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
     @IBOutlet weak var mealLat: UILabel!
     @IBOutlet weak var mealLong: UILabel!
     @IBOutlet weak var mealAddr: UITextView!
+    @IBOutlet weak var mealDate: UIDatePicker!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -94,7 +95,11 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
             newItem.locName = mealLocName.text
             newItem.photo = imageContent.image!.pngData()
             newItem.notes = mealNotes.text
-            newItem.date = Date()
+            let date = mealDate.date
+            newItem.fullDate = date
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM dd, yyyy"
+            newItem.date = formatter.string(from: date)
             newItem.locLat = Float(location?.coordinate.latitude ?? 0)
             newItem.locLong = Float(location?.coordinate.longitude ?? 0)
             m.ds_save()

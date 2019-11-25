@@ -57,7 +57,7 @@ class DataModelManager {
         encoder.dateEncodingStrategy = .formatted(DateFormatter.iso8601Full)
         request.httpBody = try! encoder.encode(postData)
         // Send the request, and write a completion method to pass to the request
-        request.sendRequest(toUrlPath: "") { (result: FDCSearchRespose) in
+        request.sendRequest(toUrlPath: "") { (result: FDCSearchResponse) in
             self.foods = result.foods
             NotificationCenter.default.post(name: Notification.Name("FDCSearchWasSuccessful"), object: nil)
         }

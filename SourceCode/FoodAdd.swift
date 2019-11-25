@@ -90,11 +90,6 @@ class FoodAdd: UIViewController, UITextFieldDelegate, SearchDelegate {
             return
         }
         
-        if foodBrandName.text!.isEmpty {
-            errorMessage.text = "Location name cannot be blank."
-            return
-        }
-        
         // If we are here, the data passed the validation tests
         
         // Tell the user what we're doing
@@ -135,6 +130,7 @@ class FoodAdd: UIViewController, UITextFieldDelegate, SearchDelegate {
         newItem.nsodium = food?.labelNutrients?.sodium?.value ?? -1
         newItem.nprotein = food?.labelNutrients?.protein?.value ?? -1
         newItem.servingSize = food?.servingSize ?? 1
+        newItem.ingredients = food?.ingredients
         
         m.ds_save()
   

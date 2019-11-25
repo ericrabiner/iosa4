@@ -36,18 +36,13 @@ struct FDCNutrientValue: Codable {
     let value: Double
 }
 
-struct FDCSearchRespose: Codable {
+struct FDCSearchResponse: Codable {
     let foods: [FDCFood]
 }
 
 struct Nutrients {
     let nutrient: String?
     let value: Double?
-}
-
-struct AllData {
-    let sectionName: String
-    let data: Any
 }
 
 extension DateFormatter {
