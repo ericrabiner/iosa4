@@ -17,6 +17,7 @@ class DataModelManager {
     var ds_model: NSManagedObjectModel!
     
     var foods = [FDCFood]()
+    var food: FDCFood?
     
     // MARK: - Lifecycle
     
@@ -40,16 +41,15 @@ class DataModelManager {
         cdStack.save()
     }
     
-    func foodGetData() -> [FDCFood] {
+    func foodsGetData() -> [FDCFood] {
         return foods
     }
     
-    // below is get with fcdid
-    //https://api.nal.usda.gov/fdc/v1/356446?api_key=4rgfn7lFClJjkb5lP6OPRfbeU1U7o8wpbnX25qNB
-    
+    func foodGetData() -> FDCFood {
+        return food!
+    }
     
     func sendFDCSearchRequest(_ postData: FDCSearchBody) {
- 
         let request = WebApiRequest()
         request.httpMethod = "POST"
         request.urlBase = "https://api.nal.usda.gov/fdc/v1/search?api_key=4rgfn7lFClJjkb5lP6OPRfbeU1U7o8wpbnX25qNB"
@@ -60,6 +60,21 @@ class DataModelManager {
         request.sendRequest(toUrlPath: "") { (result: FDCSearchRespose) in
             self.foods = result.foods
             NotificationCenter.default.post(name: Notification.Name("FDCSearchWasSuccessful"), object: nil)
+        }
+    }
+    
+    func getFDCWithId(_ fdcId: Int) {
+        print("FDCID: \(fdcId)")
+        let request = WebApiRequest()
+        request.httpMethod = "GET"
+        request.urlBase = "https://api.nal.usda.gov/fdc/v1/\(fdcId)?api_key=4rgfn7lFClJjkb5lP6OPRfbeU1U7o8wpbnX25qNB"
+  
+        // Send the request, and write a completion method to pass to the request
+        request.sendRequest(toUrlPath: "") { (result: FDCFood) in
+            self.food = result
+            dump(result)
+            dump(self.food)
+            NotificationCenter.default.post(name: Notification.Name("FDCSearchWithIdWasSuccessful"), object: nil)
         }
     }
 }

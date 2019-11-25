@@ -32,7 +32,7 @@ class FoodSearch: ListBaseCD {
     
     // Code that runs when the notification happens
     @objc func reloadTableView() {
-        foods = m.foodGetData()
+        foods = m.foodsGetData()
         title = "Food Item Search Results (\(self.foods.count))"
         tableView.reloadData()
     }

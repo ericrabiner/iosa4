@@ -7,13 +7,14 @@
     <entity name="FoodConsumed" representedClassName="FoodConsumed" syncable="YES" codeGenerationType="class">
         <attribute name="brandOwner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="descr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fdcId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="fdcId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="ncals" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="ncarbs" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nfat" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nprotein" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nsodium" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="servingSize" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meal" inverseName="foodConsumed" inverseEntity="Meal" syncable="YES"/>
     </entity>
     <entity name="Meal" representedClassName="Meal" syncable="YES" codeGenerationType="class">
@@ -34,7 +35,7 @@
     </entity>
     <elements>
         <element name="Example" positionX="-107.0390625" positionY="-168.0234375" width="128" height="75"/>
-        <element name="FoodConsumed" positionX="12.96875" positionY="136.98828125" width="128" height="193"/>
+        <element name="FoodConsumed" positionX="12.96875" positionY="136.98828125" width="128" height="208"/>
         <element name="Meal" positionX="-269.97265625" positionY="89" width="128" height="165"/>
         <element name="SavedFood" positionX="-60.00390625" positionY="-25.984375" width="128" height="105"/>
     </elements>

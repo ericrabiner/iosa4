@@ -40,11 +40,11 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
+        super.viewDidLoad()
         errorMessage.text?.removeAll()
         mealName.delegate = self
         mealLocName.delegate = self
         mealNotes.delegate = self
-        super.viewDidLoad()
     }
     
     // Make the first/desired text field active and show the keyboard
