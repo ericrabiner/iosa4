@@ -24,7 +24,7 @@ class MealList: ListBaseCD, AddMealDelegate {
         navigationItem.leftBarButtonItem = editButtonItem
         
         // Configure the frc for the desired entity type, sort is case-insensitive
-        frc = m.ds_frcForEntityNamed("Meal", withPredicateFormat: nil, predicateObject: nil, sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))], andSectionNameKeyPath: "date")
+        frc = m.ds_frcForEntityNamed("Meal", withPredicateFormat: nil, predicateObject: nil, sortDescriptors: [NSSortDescriptor(key: "date", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:))), NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))], andSectionNameKeyPath: "date")
         
         // This controller will be the frc delegate
         frc.delegate = self;
@@ -43,6 +43,7 @@ class MealList: ListBaseCD, AddMealDelegate {
     }
     
     func addTaskDidSave(_ controller: UIViewController) {
+        tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     
