@@ -15,7 +15,7 @@ protocol AddMealDelegate: AnyObject {
     func addTaskDidSave(_ controller: UIViewController)
 }
 
-class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
+class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UITextViewDelegate {
     
     // MARK: - Instance variables
     weak var delegate: AddMealDelegate?
@@ -32,12 +32,12 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
     @IBOutlet weak var mealName: UITextField!
     @IBOutlet weak var mealLocName: UITextField!
     @IBOutlet weak var errorMessage: UILabel!
-    @IBOutlet weak var mealNotes: UITextField!
     @IBOutlet weak var imageContent: UIImageView!
     @IBOutlet weak var mealLat: UILabel!
     @IBOutlet weak var mealLong: UILabel!
     @IBOutlet weak var mealAddr: UITextView!
     @IBOutlet weak var mealDate: UIDatePicker!
+    @IBOutlet weak var mealNote: UITextView!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -45,7 +45,18 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
         errorMessage.text?.removeAll()
         mealName.delegate = self
         mealLocName.delegate = self
-        mealNotes.delegate = self
+        mealNote.delegate = self
+        
+        mealLat.text = "Latitude: Loading..."
+        mealLong.text = "Longitude: Loading..."
+        mealAddr.text = "Address: Loading..."
+        getLocation()
+        
+        mealNote.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+    }
+    
+    @objc func tapDone(sender: Any) {
+        self.view.endEditing(true)
     }
     
     // Make the first/desired text field active and show the keyboard
@@ -57,7 +68,6 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         mealName.resignFirstResponder()
         mealLocName.resignFirstResponder()
-        mealNotes.resignFirstResponder()
         return true
     }
     
@@ -94,7 +104,7 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
             newItem.name = mealName.text
             newItem.locName = mealLocName.text
             newItem.photo = imageContent.image!.pngData()
-            newItem.notes = mealNotes.text
+            newItem.notes = mealNote.text
             let date = mealDate.date
             newItem.fullDate = date
             let formatter = DateFormatter()
@@ -135,13 +145,6 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
             imageContent.image = image
         }
         dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func saveLocationPressed(_ sender: Any) {
-        mealLat.text = "Latitude: Loading..."
-        mealLong.text = "Longitude: Loading..."
-        mealAddr.text = "Address: Loading..."
-        getLocation()
     }
     
     private func getLocation() {
@@ -271,4 +274,20 @@ class MealAdd: UIViewController, UITextFieldDelegate, UIImagePickerControllerDel
     }
     
     
+}
+
+
+extension UITextView {
+    
+    func addDoneButton(title: String, target: Any, selector: Selector) {
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0.0,
+                                              y: 0.0,
+                                              width: UIScreen.main.bounds.size.width,
+                                              height: 44.0))//1
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)//2
+        let barButton = UIBarButtonItem(title: title, style: .plain, target: target, action: selector)//3
+        toolBar.setItems([flexible, barButton], animated: false)//4
+        self.inputAccessoryView = toolBar//5
+    }
 }

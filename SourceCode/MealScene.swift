@@ -21,9 +21,9 @@ class MealScene: UIViewController, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var imageContent: UIImageView!
     @IBOutlet weak var mealDate: UILabel!
     @IBOutlet weak var mealTime: UILabel!
-    @IBOutlet weak var mealNotes: UILabel!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var mealLoc: UILabel!
+    @IBOutlet weak var mealNotes: UITextView!
     
     // MARK: - Lifecycle
     
