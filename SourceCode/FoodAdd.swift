@@ -138,6 +138,16 @@ class FoodAdd: UIViewController, UITextFieldDelegate, SearchDelegate {
         delegate?.addTaskDidSave(self)
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if foodItemName.text == "" {
+            errorMessage.text = "Food item name cannot be blank."
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toSearchedFood" {
             let nav = segue.destination as! UINavigationController
